@@ -1918,7 +1918,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_attributes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/attributes */ "./src/js/lib/modules/attributes.js");
 /* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
 /* harmony import */ var _modules_effects__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/effects */ "./src/js/lib/modules/effects.js");
-/* harmony import */ var _modules_effects__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_modules_effects__WEBPACK_IMPORTED_MODULE_6__);
 
 
 
@@ -2221,10 +2220,69 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.toggle = function () {
 /*!***************************************!*\
   !*** ./src/js/lib/modules/effects.js ***!
   \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: E:\\OpenServer\\domains\\uilib\\src\\js\\lib\\modules\\effects.js: Unexpected token (4:19)\n\n\u001b[0m \u001b[90m 2 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 3 | \u001b[39m$\u001b[33m.\u001b[39mprototupe\u001b[33m.\u001b[39manimateOverTime \u001b[33m=\u001b[39m \u001b[36mfunction\u001b[39m(dur\u001b[33m,\u001b[39m cb\u001b[33m,\u001b[39m fin) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 4 | \u001b[39m    \u001b[36mconst\u001b[39m timeStart\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m   | \u001b[39m                   \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 5 | \u001b[39m}\u001b[33m;\u001b[39m\u001b[0m\n    at Parser._raise (E:\\OpenServer\\domains\\uilib\\node_modules\\@babel\\parser\\lib\\index.js:766:17)\n    at Parser.raiseWithData (E:\\OpenServer\\domains\\uilib\\node_modules\\@babel\\parser\\lib\\index.js:759:17)\n    at Parser.raise (E:\\OpenServer\\domains\\uilib\\node_modules\\@babel\\parser\\lib\\index.js:753:17)\n    at Parser.unexpected (E:\\OpenServer\\domains\\uilib\\node_modules\\@babel\\parser\\lib\\index.js:8966:16)\n    at Parser.parseVar (E:\\OpenServer\\domains\\uilib\\node_modules\\@babel\\parser\\lib\\index.js:12101:18)\n    at Parser.parseVarStatement (E:\\OpenServer\\domains\\uilib\\node_modules\\@babel\\parser\\lib\\index.js:11906:10)\n    at Parser.parseStatementContent (E:\\OpenServer\\domains\\uilib\\node_modules\\@babel\\parser\\lib\\index.js:11498:21)\n    at Parser.parseStatement (E:\\OpenServer\\domains\\uilib\\node_modules\\@babel\\parser\\lib\\index.js:11431:17)\n    at Parser.parseBlockOrModuleBlockBody (E:\\OpenServer\\domains\\uilib\\node_modules\\@babel\\parser\\lib\\index.js:12013:25)\n    at Parser.parseBlockBody (E:\\OpenServer\\domains\\uilib\\node_modules\\@babel\\parser\\lib\\index.js:11999:10)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.animateOverTime = function (duration, callback, final) {
+  let timeStart;
+
+  function _animateOverTime(time) {
+    if (!timeStart) {
+      timeStart = time;
+    }
+
+    let timeElapsed = time - timeStart;
+    let complection = Math.min(timeElapsed / duration, 1);
+    callback(complection);
+
+    if (timeElapsed < duration) {
+      requestAnimationFrame(_animateOverTime);
+    } else {
+      if (typeof final === 'function') {
+        final();
+      }
+    }
+  }
+
+  return _animateOverTime;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeIn = function (dur, display, fin) {
+  for (let i = 0; i < this.length; i++) {
+    this[i].style.display = display || 'block';
+
+    const _fadeIn = complection => {
+      this[i].style.opacity = complection;
+    };
+
+    const ani = this.animateOverTime(dur, _fadeIn, fin);
+    requestAnimationFrame(ani);
+  }
+
+  return this;
+};
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeOut = function (dur, fin) {
+  for (let i = 0; i < this.length; i++) {
+    const _fadeOut = complection => {
+      this[i].style.opacity = 1 - complection;
+
+      if (complection === 1) {
+        this[i].style.display = 'none';
+      }
+    };
+
+    const ani = this.animateOverTime(dur, _fadeOut, fin);
+    requestAnimationFrame(ani);
+  }
+
+  return this;
+};
 
 /***/ }),
 
@@ -2300,8 +2358,9 @@ Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').click(function (
 // console.log($('button').html('Hello'));
 // console.log($('div').eq(2).find('.more'));
 // console.log($('.more').closest('.findme'));
+// console.log($('.findme').siblings());
 
-console.log(Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.findme').siblings());
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').fadeOut(3000);
 
 /***/ })
 

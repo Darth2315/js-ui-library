@@ -18,4 +18,6 @@ $('div').click(function() {
 
 // console.log($('.more').closest('.findme'));
 
-console.log($('.findme').siblings());
+// console.log($('.findme').siblings());
+
+$('button').fadeOut(3000);
