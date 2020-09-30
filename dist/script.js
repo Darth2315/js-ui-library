@@ -2359,8 +2359,7 @@ Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').click(function (
 // console.log($('div').eq(2).find('.more'));
 // console.log($('.more').closest('.findme'));
 // console.log($('.findme').siblings());
-
-Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').fadeOut(3000);
+// $('button').fadeOut(3000);
 
 /***/ })
 

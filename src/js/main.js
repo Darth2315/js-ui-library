@@ -20,4 +20,4 @@ $('div').click(function() {
 
 // console.log($('.findme').siblings());
 
-$('button').fadeOut(3000);
+// $('button').fadeOut(3000);
