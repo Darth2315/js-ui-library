@@ -1,12 +1,37 @@
 import $ from './lib/lib';
 
-$('button').on('click', function() {
-    $('div').eq(1).toggleClass('active');
+$('#first').on('click', () => {
+    $('div').eq(1).fadeOut(800);
 });
 
-$('div').click(function() {
-    console.log($(this).index());
+$('[data-count="second"]').on('click', () => {
+    $('div').eq(2).fadeOut(800);
 });
+
+$('button').eq(2).on('click', () => {
+    $('.w-500').fadeOut(800);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+// Exemple
+
+// $('button').on('click', function() {
+//     $('div').eq(1).toggleClass('active');
+// });
+
+// $('div').click(function() {
+//     console.log($(this).index());
+// });
 
 // $('div').setAttribute('batman', 'alex');
 // $('div').getAttribute('batman');
