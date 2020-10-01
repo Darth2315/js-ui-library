@@ -17,7 +17,7 @@ $.prototype.getAttribute = function(name) {
     }
     
     for (let i = 0; i < this.length; i++) {
-        console.log(this[i].getAttribute(name));
+        this[i].getAttribute(name);
     }
     return this;
 };
