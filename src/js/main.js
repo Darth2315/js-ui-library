@@ -1,6 +1,29 @@
 import $ from './lib/lib';
 
-
+$('#trigger').click(() => $('#trigger').createModal({
+    text: {
+        title: 'Modal title #1',
+        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus qui ut, est incidunt facilis iure! Enim assumenda, ipsa, error dolor maxime sint expedita tenetur nulla aperiam fugiat necessitatibus illo cumque.'
+    },
+    btns: {
+       count: 2,
+       settings: [
+           [
+               'Close',
+               ['btn-danger', 'mr-10'],
+               true
+           ],
+           [
+               'Save changes',
+               ['btn-success'],
+               false,
+               () => {
+                   alert('Данные сохранены');
+               }
+           ]
+       ] 
+    }
+}));
 
 
 

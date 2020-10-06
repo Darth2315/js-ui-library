@@ -1908,7 +1908,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-_core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.modal = function () {
+_core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.modal = function (created) {
   for (let i = 0; i < this.length; i++) {
     const target = this[i].getAttribute('data-target');
     Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])(this[i]).click(e => {
@@ -1916,21 +1916,32 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.modal = function () {
       Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])(target).fadeIn(500);
       document.body.style.overflow = 'hidden';
     });
-  }
+    const closeElements = document.querySelectorAll(`${target} [data-close]`);
+    closeElements.forEach(item => {
+      Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])(item).click(() => {
+        Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])(target).fadeOut(500);
+        document.body.style.overflow = '';
 
-  const closeElements = document.querySelectorAll('[data-close]');
-  closeElements.forEach(item => {
-    Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])(item).click(() => {
-      Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])('.modal').fadeOut(300);
-      document.body.style.overflow = '';
+        if (created) {
+          setTimeout(() => {
+            document.querySelector(target).remove();
+          }, 500);
+        }
+      });
     });
-  });
-  Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])('.modal').click(e => {
-    if (e.target.classList.contains('modal')) {
-      Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])('.modal').fadeOut(300);
-      document.body.style.overflow = '';
-    }
-  });
+    Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])(target).click(e => {
+      if (e.target.classList.contains('modal')) {
+        Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])(target).fadeOut(500);
+        document.body.style.overflow = '';
+
+        if (created) {
+          setTimeout(() => {
+            document.querySelector(target).remove();
+          }, 500);
+        }
+      }
+    });
+  }
 };
 
 Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])('[data-toggle="modal"]').modal();
@@ -1942,20 +1953,24 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.createModal = function (
   for (let i = 0; i < this.length; i++) {
     let modal = document.createElement('div');
     modal.classList.add('modal');
-    modal.setAttribute('id', this[i].getAttribute('data-target').slice(1));
+    modal.setAttribute('id', this[i].getAttribute('data-target').slice(1)); // btns = {count: num, settings: [[text, classNames=[], close, cb]]}
+
     const buttons = [];
+    const {
+      settings
+    } = btns;
 
     for (let j = 0; j < btns.count; j++) {
       let btn = document.createElement('button');
-      btn.classList.add('btn', ...btns.settings[j][1]);
-      btn.textContent = btns.settings[j][0];
+      btn.classList.add('btn', ...settings[j][1]);
+      btn.textContent = settings[j][0];
 
-      if (btns.settings[j][2]) {
+      if (settings[j][2]) {
         btn.setAttribute('data-close', 'true');
       }
 
-      if (btns.settings[j][3] && typeof btns.settings[j][3] === 'function') {
-        btn.addEventListener('click', btns.settings[j][3]);
+      if (settings[j][3] && typeof settings[j][3] === 'function') {
+        btn.addEventListener('click', settings[j][3]);
       }
 
       buttons.push(btn);
@@ -1980,9 +1995,9 @@ _core__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.createModal = function (
                 </div>
             </div>
         `;
-    modal.querySelector('.modal-footer').appendChild(...buttons);
+    modal.querySelector('.modal-footer').append(...buttons);
     document.body.appendChild(modal);
-    Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])(this[i]).modal();
+    Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])(this[i]).modal(true);
     Object(_core__WEBPACK_IMPORTED_MODULE_1__["default"])(this[i].getAttribute('data-target')).fadeIn(500);
   }
 };
@@ -2484,7 +2499,19 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.click = function (handle
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
- // Exemple
+
+Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').click(() => Object(_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').createModal({
+  text: {
+    title: 'Modal title #1',
+    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus qui ut, est incidunt facilis iure! Enim assumenda, ipsa, error dolor maxime sint expedita tenetur nulla aperiam fugiat necessitatibus illo cumque.'
+  },
+  btns: {
+    count: 2,
+    settings: [['Close', ['btn-danger', 'mr-10'], true], ['Save changes', ['btn-success'], false, () => {
+      alert('Данные сохранены');
+    }]]
+  }
+})); // Exemple
 // $('button').on('click', function() {
 //     $('div').eq(1).toggleClass('active');
 // });
