@@ -1,5 +1,6 @@
 import $ from '../core';
 
+// Менять/получать html структуру элемента
 $.prototype.html = function(content) {
     for (let i = 0; i < this.length; i++) {
         if (content) {
@@ -11,6 +12,7 @@ $.prototype.html = function(content) {
     return this;
 };
 
+// Получить элемент по номеру
 $.prototype.eq = function(i) {
     const swap = this[i];
     const objLength = Object.keys(this).length;
@@ -24,6 +26,7 @@ $.prototype.eq = function(i) {
     return this;
 };
 
+// Получить индекс элемента
 $.prototype.index = function() {
     const parent = this[0].parentNode;
     const childs = [...parent.children];
@@ -35,6 +38,7 @@ $.prototype.index = function() {
     return childs.findIndex(findMyIndex);
 };
 
+// Находим нужный элемент по селектору внутри уже найденых
 $.prototype.find = function(selector) {
     let numberOfItems = 0;
     let counter = 0;
@@ -81,6 +85,7 @@ $.prototype.closest = function(selector) {
     return this;
 };
 
+// Получаем все соседние элементы кроме текущего
 $.prototype.siblings = function() {
     let numberOfItems = 0;
     let counter = 0;
